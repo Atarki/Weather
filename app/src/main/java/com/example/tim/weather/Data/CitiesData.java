@@ -9,12 +9,24 @@ public class CitiesData {
         return cityName;
     }
 
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
     public String getTemperature() {
         return temperature;
     }
 
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
+    }
+
     public int getIdPhoto() {
         return idPhoto;
+    }
+
+    public void setIdPhoto(int idPhoto) {
+        this.idPhoto = idPhoto;
     }
 
     public CitiesData(String cityName, String temperature, int idPhoto) {
@@ -22,4 +34,5 @@ public class CitiesData {
         this.temperature = temperature;
         this.idPhoto = idPhoto;
     }
+
 }
