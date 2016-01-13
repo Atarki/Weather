@@ -1,40 +1,54 @@
 package com.example.tim.weather.Adapter;
 
-import android.support.v7.widget.CardView;
+import android.app.Activity;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.tim.weather.Data.CitiesData;
+import com.example.tim.weather.Activity.MainActivity;
+import com.example.tim.weather.Data.CityData;
 import com.example.tim.weather.R;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-    public List<CitiesData> cities;
+public class AdapterRecycle extends RecyclerView.Adapter<AdapterRecycle.ViewHolder> {
+    public List<CityData> cities;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public View view;
-        public CardView cv;
         public TextView cityName;
-        public TextView temperature;
-        public ImageView idPhoto;
 
         public ViewHolder(View view) {
             super(view);
             this.view = view;
-//            cv = (CardView) view.findViewById(R.id.cv);
             cityName = (TextView) view.findViewById(R.id.cityName);
-            temperature = (TextView) view.findViewById(R.id.temperature);
-            idPhoto = (ImageView) view.findViewById(R.id.idPhoto);
         }
     }
 
+    public static List getCityList() throws IOException {
+        List<String> cityList = new ArrayList<String>();
+        InputStream inputStream = new MainActivity().assetReader();
 
-    public MyAdapter(List<CitiesData> cities) {
+        BufferedReader reader = new BufferedReader(new FileReader(String.valueOf(inputStream)));
+        String line;
+        while ((line = reader.readLine()) != null) cityList.add(line);
+        reader.close();
+        inputStream.close();
+        return cityList;
+    }
+
+    public AdapterRecycle(List<CityData> cities) {
         this.cities = cities;
     }
 
@@ -45,26 +59,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cardview, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycle_view, viewGroup, false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-//        CardView cardView = (CardView) viewHolder.cv.findViewById(R.id.cv);
         TextView cityName = (TextView) viewHolder.cityName.findViewById(R.id.cityName);
-        TextView temperature = (TextView) viewHolder.temperature.findViewById(R.id.temperature);
-        ImageView idPhoto = (ImageView) viewHolder.idPhoto.findViewById(R.id.idPhoto);
-
-//        cardView.draw();
         cityName.setText(cities.get(i).getCityName());
-        temperature.setText(cities.get(i).getTemperature());
-        idPhoto.setImageResource(cities.get(i).getIdPhoto());
     }
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
+
 
 }

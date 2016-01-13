@@ -1,6 +1,8 @@
 package com.example.tim.weather.Activity;
 
 import android.app.Activity;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,20 +10,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.tim.weather.Adapter.MyAdapter;
-import com.example.tim.weather.Data.CitiesData;
+import com.example.tim.weather.Adapter.AdapterRecycle;
+import com.example.tim.weather.Data.CityData;
 import com.example.tim.weather.Data.JSON;
 import com.example.tim.weather.R;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
-import java.util.Random;
 
 public class MainActivity extends Activity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<CitiesData> cityList;
+    private List<CityData> cityList;
 
     public void setTextView(TextView textView) {
         this.textView = textView;
@@ -35,6 +37,10 @@ public class MainActivity extends Activity {
     private Button button;
 
 
+    public InputStream assetReader() throws IOException {
+        return getAssets().open("City_list.txt");
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,11 +54,13 @@ public class MainActivity extends Activity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter
-        cityList = initializeData();
-        mAdapter = new MyAdapter(cityList);
+        try {
+            cityList = AdapterRecycle.getCityList();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mAdapter = new AdapterRecycle(cityList);
         mRecyclerView.setAdapter(mAdapter);
-
-
 
         //HTTP
         textView = (TextView) findViewById(R.id.textView);
@@ -68,17 +76,6 @@ public class MainActivity extends Activity {
             }
         });
     }
-
-    public List<CitiesData> initializeData() {
-        List<CitiesData> cities = new ArrayList<>();
-        Random random = new Random();
-        for (int i = 0; i < 20; i++) {
-            cities.add(new CitiesData("City: " + i, "Temperature: " + random.nextInt(30), R.drawable.cloud));
-        }
-        return cities;
-    }
-
-
 }
 
 
