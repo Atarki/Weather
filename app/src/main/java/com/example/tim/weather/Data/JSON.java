@@ -15,9 +15,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 public class JSON extends AsyncTask<String, String, CityData> {
-    private static String TOKEN = "3949b2dbd68ccfa5fe4a429b0de9c965";
+    private static String TOKEN = "a5982092ec3e995cac27ef4bf254ffd2";
     private static String httpGroup = "http://api.openweathermap.org/data/2.5/group?id=";
     private static String http = "http://api.openweathermap.org/data/2.5/find?id=";
     private static String map = "&units=metric&appid=";
@@ -51,16 +52,17 @@ public class JSON extends AsyncTask<String, String, CityData> {
             CityData cityData = new CityData();
             JSONObject ParentJSON = new JSONObject(finalJSON);
 
-            JSONArray weather = ParentJSON.getJSONArray("weather");
-            JSONObject weatherJSON = weather.getJSONObject(0);
 
-            //JSON parce
+            JSONArray weatherArray = ParentJSON.getJSONArray("weather");
+            JSONObject weatherJSON = weatherArray.getJSONObject(0);
+
+            //JSON parse
             CityData.Zero zero = new CityData.Zero();
-            zero.setMain(weatherJSON.getString("main"));
-            zero.setIcon(weatherJSON.getString("icon"));
+            zero.setMain(weatherJSON.optString("main"));
+            zero.setIcon(weatherJSON.optString("icon"));
 
             CityData.Main main = new CityData.Main();
-            JSONObject mainJSON = ParentJSON.getJSONObject("Main");
+            JSONObject mainJSON = ParentJSON.getJSONObject("main");
             main.setHumidity(mainJSON.getString("humidity"));
             main.setPressure(mainJSON.getString("pressure"));
             main.setTemp(mainJSON.getString("temp"));
@@ -68,7 +70,7 @@ public class JSON extends AsyncTask<String, String, CityData> {
             main.setTemp_min(mainJSON.getString("temp_min"));
 
             CityData.Wind wind = new CityData.Wind();
-            JSONObject windJSON = mainJSON.getJSONObject("Wind");
+            JSONObject windJSON = mainJSON.getJSONObject("wind");
             wind.setDeg(windJSON.getString("deg"));
             wind.setSpeed(windJSON.getString("speed"));
 
@@ -90,7 +92,7 @@ public class JSON extends AsyncTask<String, String, CityData> {
     @Override
     protected void onPostExecute(CityData result) {
         super.onPostExecute(result);
-//        AdapterRecycle adapter = new AdapterRecycle(Context.ACTIVITY_SERVICE);
+//        AdapterRecycle adapter = new AdapterRecycle((List<CityData>) result);
         // TODO
     }
 }

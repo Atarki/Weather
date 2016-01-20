@@ -22,3 +22,32 @@
 //        689558 String Vinnytsia = "http://api.openweathermap.org/data/2.5/weather?q=Vinnytsia,ua&appid=2de143494c0b295cca9337e1e96b00e0";
 //        687700 String Zaporizhia = "http://api.openweathermap.org/data/2.5/weather?q=Zaporizhia,ua&appid=2de143494c0b295cca9337e1e96b00e0";
 //        686967 String Zhytomyr = "http://api.openweathermap.org/data/2.5/weather?q=Zhytomyr,ua&appid=2de143494c0b295cca9337e1e96b00e0";
+
+
+
+
+//
+//private int Cherkasy = 710791;
+//private int Chernihiv = 710735;
+//private int Chernivtsi = 710719;
+//private int Dnipropetrovsk = 709930;
+//private int Donetsk = 709717;
+//private int Ivano = 707471;
+//private int Kharkiv = 706483;
+//private int Kherson = 706448;
+//private int Khmelnytskyi = 706369;
+//private int Kiev = 696050;
+//private int Kirovohrad = 705812;
+//private int Luhansk = 702658;
+//private int Lviv = 702550;
+//private int Mykolaiv = 700569;
+//private int Odessa = 698740;
+//private int Poltava = 696643;
+//private int Rivne = 695594;
+//private int Sumy = 692194;
+//private int Ternopil = 691650;
+//private int Lutsk = 702569;
+//private int Uzhhorod = 690548;
+//private int Vinnytsia = 689558;
+//private int Zaporizhia = 687700;
+//private int Zhytomyr = 686967;

@@ -1,8 +1,6 @@
 package com.example.tim.weather.Activity;
 
 import android.app.Activity;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,32 +13,47 @@ import com.example.tim.weather.Data.CityData;
 import com.example.tim.weather.Data.JSON;
 import com.example.tim.weather.R;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends Activity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private List<String> citiesID;
     private List<CityData> cityList;
-
-    public void setTextView(TextView textView) {
-        this.textView = textView;
-    }
-
-    public static TextView getTextView() {
-        return textView;
-    }
-
-    private static TextView textView;
     private Button button;
+    private TextView textView;
 
+    public void getCitiesID() throws IOException {
+        citiesID = new ArrayList<>();
+        InputStream inputStream = getResources().getAssets().open("City_list.txt");
 
-    public InputStream assetReader() throws IOException {
-        return getAssets().open("City_list.txt");
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
+        String line;
+        while ((line = bufferedReader.readLine()) != null) citiesID.add(line);
+        bufferedReader.close();
+        inputStream.close();
+        System.out.println(citiesID);
     }
+
+    public List<CityData> getCityList(List<String> citiesID) {
+        cityList = new ArrayList<>();
+        for (int i = 0; i < citiesID.size(); i++) {
+            CityData cityData = new CityData();
+            cityData.setCityName(citiesID.get(i));
+            cityList.add(cityData);
+//            cityList.add(new CityData());
+        }
+        return cityList;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +68,8 @@ public class MainActivity extends Activity {
 
         // specify an adapter
         try {
-            cityList = AdapterRecycle.getCityList();
+            getCitiesID();
+            getCityList(citiesID);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,7 +85,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //http://api.openweathermap.org/data/2.5/group?id=524901,703448,2643743&units=metric&appid=2de143494c0b295cca9337e1e96b00e0
-                new JSON().execute("http://api.openweathermap.org/data/2.5/weather?q=kiev&appid=2de143494c0b295cca9337e1e96b00e0", "", "");
+                new JSON().execute("http://api.openweathermap.org/data/2.5/weather?q=kiev&appid=a5982092ec3e995cac27ef4bf254ffd2", "", "");
 //                json.doInBackground("http://api.openweathermap.org/data/2.5/weather?q=kiev&appid=2de143494c0b295cca9337e1e96b00e0");
             }
         });
