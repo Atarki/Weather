@@ -1,11 +1,41 @@
 package com.example.tim.weather.Data;
 
+import java.util.Arrays;
 import java.util.List;
 
-public class CityData {
+public class POJO {
     private String cityName;
-    private int idPhoto;
-    private List<Zero> zeroList;
+    private String id;
+    private List<Weather> weatherList;
+    private String name;
+    private Weather[] weather;
+    private Main main;
+    private Wind wind;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Weather> getWeatherList() {
+        return weatherList;
+    }
+
+    public void setWeatherList(List<Weather> weatherList) {
+        this.weatherList = weatherList;
+    }
+
+    public Weather[] getWeather() {
+        return weather;
+    }
+
+    public void setWeather(Weather[] weather) {
+        this.weather = weather;
+    }
+
 
     public String getCityName() {
         return cityName;
@@ -15,17 +45,40 @@ public class CityData {
         this.cityName = cityName;
     }
 
-    public int getIdPhoto() {
-        return idPhoto;
+    public String getId() {
+        return id;
     }
 
-    public void setIdPhoto(int idPhoto) {
-        this.idPhoto = idPhoto;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public static class Zero {
-        String main;
-        String icon;
+    @Override
+    public String toString() {
+        return "POJO{" +
+                "cityName='" + cityName + '\'' +
+                ", id=" + id +
+                ", weatherList=" + weatherList +
+                ", name='" + name + '\'' +
+                ", weather=" + Arrays.toString(weather) +
+                '}';
+    }
+
+    public static class Weather {
+        private String main;
+        private String icon;
+        private String description;
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public Weather() {
+        }
 
         public String getIcon() {
             return icon;
@@ -45,11 +98,11 @@ public class CityData {
     }
 
     public static class Main {
-        String temp;
-        String pressure;
-        String humidity;
-        String temp_min;
-        String temp_max;
+        private String temp;
+        private String pressure;
+        private String humidity;
+        private String temp_min;
+        private String temp_max;
 
         public String getTemp() {
             return temp;
@@ -93,8 +146,8 @@ public class CityData {
     }
 
     public static class Wind {
-        String speed;
-        String deg;
+        private String speed;
+        private String deg;
 
         public String getSpeed() {
             return speed;

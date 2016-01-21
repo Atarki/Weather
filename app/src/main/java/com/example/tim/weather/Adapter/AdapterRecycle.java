@@ -6,13 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.tim.weather.Data.CityData;
+import com.example.tim.weather.Data.POJO;
 import com.example.tim.weather.R;
 
 import java.util.List;
 
 public class AdapterRecycle extends RecyclerView.Adapter<AdapterRecycle.ViewHolder> {
-    public List<CityData> cities;
+    public List<POJO> cities;
     public List<String> citiesID;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -26,7 +26,7 @@ public class AdapterRecycle extends RecyclerView.Adapter<AdapterRecycle.ViewHold
         }
     }
 
-    public AdapterRecycle(List<CityData> cities) {
+    public AdapterRecycle(List<POJO> cities) {
         this.cities = cities;
     }
 

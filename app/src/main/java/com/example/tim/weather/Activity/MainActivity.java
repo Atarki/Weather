@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.tim.weather.Adapter.AdapterRecycle;
-import com.example.tim.weather.Data.CityData;
+import com.example.tim.weather.Data.POJO;
 import com.example.tim.weather.Data.JSON;
 import com.example.tim.weather.R;
 
@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<String> citiesID;
-    private List<CityData> cityList;
+    private List<POJO> cityList;
     private Button button;
     private TextView textView;
 
@@ -43,13 +43,13 @@ public class MainActivity extends Activity {
         System.out.println(citiesID);
     }
 
-    public List<CityData> getCityList(List<String> citiesID) {
+    public List<POJO> getCityList(List<String> citiesID) {
         cityList = new ArrayList<>();
         for (int i = 0; i < citiesID.size(); i++) {
-            CityData cityData = new CityData();
-            cityData.setCityName(citiesID.get(i));
-            cityList.add(cityData);
-//            cityList.add(new CityData());
+            POJO POJO = new POJO();
+            POJO.setCityName(citiesID.get(i));
+            cityList.add(POJO);
+//            cityList.add(new POJO());
         }
         return cityList;
     }
