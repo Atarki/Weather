@@ -12,8 +12,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
-public class JSON extends AsyncTask<String, String, POJO> {
+public class JSON extends AsyncTask<String, String, Object> {
     private static String TOKEN = "a5982092ec3e995cac27ef4bf254ffd2";
     private static String httpGroup = "http://api.openweathermap.org/data/2.5/group?id=";
     private static String http = "http://api.openweathermap.org/data/2.5/weather?q=";
@@ -26,10 +29,11 @@ public class JSON extends AsyncTask<String, String, POJO> {
             "706483,706448,706369,696050,705812,702658,702550,700569," +
             "698740,696643,695594,692194,691650,702569,690548,689558,687700,686967";
     String chosenCity;
+    private List<Object> jsonParsedObjects = new ArrayList<>();
 
 
     @Override
-    public POJO doInBackground(String... params) {
+    public Object doInBackground(String... params) {
 
         try {
             URL url = new URL(http + "Kiev" + map + TOKEN);
@@ -81,7 +85,7 @@ public class JSON extends AsyncTask<String, String, POJO> {
             JSONArray weatherArray = ParentJSON.getJSONArray("weather");
             JSONObject weatherJSON_01 = weatherArray.getJSONObject(0);
 
-            if (weatherArray.getJSONObject(1) != null) {
+            /*if (weatherArray.getJSONObject(1) != null) {
                 JSONObject weatherJSON_02 = weatherArray.getJSONObject(1);
                 POJO.Weather weather_02 = new POJO.Weather();
                 weather_02.setMain(weatherJSON_02.optString("main"));
@@ -91,7 +95,7 @@ public class JSON extends AsyncTask<String, String, POJO> {
                 System.out.println(weather_02.getMain());
                 System.out.println(weather_02.getDescription());
                 System.out.println(weather_02.getIcon());
-            }
+            }*/
 
             //JSON parse
 //            POJO.Weather weather = weatherJSON.getJSONObject("0");
@@ -123,7 +127,12 @@ public class JSON extends AsyncTask<String, String, POJO> {
             System.out.println(wind.getDeg());
             System.out.println(wind.getSpeed());
 
-            return null;
+            jsonParsedObjects.add(pojo);
+            jsonParsedObjects.add(weather_01);
+            jsonParsedObjects.add(main);
+            jsonParsedObjects.add(wind);
+
+            return jsonParsedObjects;
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();
@@ -139,7 +148,7 @@ public class JSON extends AsyncTask<String, String, POJO> {
     }
 
     @Override
-    protected void onPostExecute(POJO result) {
+    protected void onPostExecute(Object result) {
         super.onPostExecute(result);
 //        AdapterRecycle adapter = new AdapterRecycle((List<POJO>) result);
         // TODO

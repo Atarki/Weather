@@ -6,40 +6,42 @@
     tools:context=".Activity.MainActivity">
 
     <!-- A RecyclerView with some commonly used attributes -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
-        android:scrollbars="vertical"
-        android:layout_width="match_parent"
-        android:padding="4pt"
-        android:layout_height="match_parent"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Push the Button"
-        android:id="@+id/button"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView"
-        android:layout_below="@+id/button"
-        android:layout_marginTop="15dp"
-        android:layout_alignParentStart="true"
-        android:textSize="15dp"/>
+        android:background="@android:color/background_light"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Push the Button" />
+
+
+        <SearchView
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+
+
+    </LinearLayout>
 
     <!-- res/values/styles.xml -->
 
 
 </RelativeLayout>
 
-<!--
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
--->
+    <!--
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+    -->

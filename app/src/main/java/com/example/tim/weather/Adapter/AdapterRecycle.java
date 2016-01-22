@@ -1,28 +1,54 @@
 package com.example.tim.weather.Adapter;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.tim.weather.Activity.Info;
+import com.example.tim.weather.Activity.MainActivity;
 import com.example.tim.weather.Data.POJO;
 import com.example.tim.weather.R;
 
 import java.util.List;
 
 public class AdapterRecycle extends RecyclerView.Adapter<AdapterRecycle.ViewHolder> {
-    public List<POJO> cities;
-    public List<String> citiesID;
+    private List<POJO> cities;
+    private List<String> citiesID;
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public View view;
-        public TextView cityName;
+        private View view;
+        private TextView cityName;
+        private CardView cardView;
+        private Context context;
+
+        public static void setContext(Context context) {
+            context = context;
+        }
+
 
         public ViewHolder(View view) {
             super(view);
             this.view = view;
+            cardView = (CardView) view.findViewById(R.id.cv);
             cityName = (TextView) view.findViewById(R.id.cityName);
+            cardView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    System.out.println("test click");
+//                    Intent intent = new Intent(context.getApplicationContext(), Info.class);
+                    Intent intent = new Intent(context, Info.class);
+//                    startActivity(intent);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 

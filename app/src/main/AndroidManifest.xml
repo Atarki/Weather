@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
+        <activity android:label="@string/app_name" android:name=".Activity.Info"/>
         <activity
             android:name="com.example.tim.weather.Activity.MainActivity">
             <intent-filter>
