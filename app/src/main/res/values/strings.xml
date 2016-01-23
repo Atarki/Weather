@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">App_Weather</string>
+    <string name="callInfo">App_Weather</string>
 </resources>

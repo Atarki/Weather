@@ -1,6 +1,5 @@
 package com.example.tim.weather.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.tim.weather.Activity.Info;
-import com.example.tim.weather.Activity.MainActivity;
 import com.example.tim.weather.Data.POJO;
 import com.example.tim.weather.R;
 
@@ -20,25 +18,21 @@ import java.util.List;
 public class AdapterRecycle extends RecyclerView.Adapter<AdapterRecycle.ViewHolder> {
     private List<POJO> cities;
     private List<String> citiesID;
+    private static Context context;
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private View view;
         private TextView cityName;
         private CardView cardView;
-        private Context context;
-
-        public static void setContext(Context context) {
-            context = context;
-        }
-
 
         public ViewHolder(View view) {
             super(view);
             this.view = view;
+            final Context context = AdapterRecycle.context;
             cardView = (CardView) view.findViewById(R.id.cv);
             cityName = (TextView) view.findViewById(R.id.cityName);
-            cardView.setOnClickListener(new View.OnClickListener() {
+            /*cardView.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
@@ -46,14 +40,15 @@ public class AdapterRecycle extends RecyclerView.Adapter<AdapterRecycle.ViewHold
 //                    Intent intent = new Intent(context.getApplicationContext(), Info.class);
                     Intent intent = new Intent(context, Info.class);
 //                    startActivity(intent);
-                    context.startActivity(intent);
+                    context.getApplicationContext().startActivity(intent);
                 }
-            });
+            });*/
         }
     }
 
-    public AdapterRecycle(List<POJO> cities) {
+    public AdapterRecycle(List<POJO> cities, Context context) {
         this.cities = cities;
+        this.context = context;
     }
 
     @Override

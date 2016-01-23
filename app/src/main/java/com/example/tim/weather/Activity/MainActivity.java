@@ -2,9 +2,11 @@ package com.example.tim.weather.Activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.example.tim.weather.Adapter.AdapterRecycle;
 import com.example.tim.weather.Data.POJO;
@@ -24,6 +26,7 @@ public class MainActivity extends Activity {
     private List<String> citiesID;
     private List<POJO> cityList;
     public Context context;
+    private View view;
 
     public void getCitiesID() throws IOException {
         citiesID = new ArrayList<>();
@@ -50,10 +53,12 @@ public class MainActivity extends Activity {
         return cityList;
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         context = getApplicationContext();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -70,11 +75,18 @@ public class MainActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mAdapter = new AdapterRecycle(cityList);
+        mAdapter = new AdapterRecycle(cityList, context);
         mRecyclerView.setAdapter(mAdapter);
 
 
-        AdapterRecycle.ViewHolder.setContext(context);
+//        AdapterRecycle.ViewHolder.setContext(context);
+    }
+    public void callInfo(View view){
+        System.out.println("test click");
+//                    Intent intent = new Intent(context.getApplicationContext(), Info.class);
+        Intent intent = new Intent(context, Info.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }
 
