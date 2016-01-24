@@ -14,9 +14,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class JSON extends AsyncTask<String, String, Object> {
+public class JSON extends AsyncTask<String, String, List<Object>> {
     private static String TOKEN = "a5982092ec3e995cac27ef4bf254ffd2";
     private static String httpGroup = "http://api.openweathermap.org/data/2.5/group?id=";
     private static String http = "http://api.openweathermap.org/data/2.5/weather?q=";
@@ -28,12 +27,16 @@ public class JSON extends AsyncTask<String, String, Object> {
     String citiesID = "710791,710735,710719,709930,709717,707471," +
             "706483,706448,706369,696050,705812,702658,702550,700569," +
             "698740,696643,695594,692194,691650,702569,690548,689558,687700,686967";
-    String chosenCity;
-    private List<Object> jsonParsedObjects = new ArrayList<>();
+
+    public List<Object> getJsonParsedObjects() {
+        return jsonParsedObjects;
+    }
+
+    public List<Object> jsonParsedObjects;
 
 
     @Override
-    public Object doInBackground(String... params) {
+    public List<Object> doInBackground(String... params) {
 
         try {
             URL url = new URL(http + "Kiev" + map + TOKEN);
@@ -44,34 +47,13 @@ public class JSON extends AsyncTask<String, String, Object> {
 
             inputStream = connection.getInputStream();
             reader = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
 
             String line = "";
             while ((line = reader.readLine()) != null) {
                 buffer.append(line);
             }
             String finalJSON = buffer.toString();
-
-            //GSON part
-           /* Gson gson = new Gson();
-
-            POJO pojo = gson.fromJson(finalJSON, POJO.class);
-            String name = pojo.getName();
-//            POJO.Weather[] weather = gson.fromJson("weather", POJO.Weather[].class);
-            System.out.println(name);
-            System.out.println(pojo.toString());
-//            System.out.println(weather);*/
-
-            //JACKSON JSON part
-            /*ObjectMapper mapper = new ObjectMapper();
-            POJO pojo = mapper.readValue(url, POJO.class);
-            POJO.Weather[] weather = pojo.getWeather();
-            String icon = weather[0].getIcon();
-            String main = weather[0].getMain();
-
-            System.out.println(icon);
-            System.out.println(main);
-            System.out.println(pojo);*/
 
             //ANDROID REGULAR JSON part
             JSONObject ParentJSON = new JSONObject(finalJSON);
@@ -97,8 +79,6 @@ public class JSON extends AsyncTask<String, String, Object> {
                 System.out.println(weather_02.getIcon());
             }*/
 
-            //JSON parse
-//            POJO.Weather weather = weatherJSON.getJSONObject("0");
             POJO.Weather weather_01 = new POJO.Weather();
             weather_01.setMain(weatherJSON_01.optString("main"));
             weather_01.setIcon(weatherJSON_01.optString("icon"));
@@ -127,30 +107,29 @@ public class JSON extends AsyncTask<String, String, Object> {
             System.out.println(wind.getDeg());
             System.out.println(wind.getSpeed());
 
+            jsonParsedObjects = new ArrayList<>();
             jsonParsedObjects.add(pojo);
             jsonParsedObjects.add(weather_01);
             jsonParsedObjects.add(main);
             jsonParsedObjects.add(wind);
 
+            if (connection == null) connection.disconnect();
+            if (reader == null) reader.close();
+
             return jsonParsedObjects;
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) connection.disconnect();
-            try {
-                if (reader != null) reader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         return null;
     }
 
     @Override
-    protected void onPostExecute(Object result) {
+    protected void onPostExecute(List<Object> result) {
         super.onPostExecute(result);
+//        jsonParsedObjects = result;
 //        AdapterRecycle adapter = new AdapterRecycle((List<POJO>) result);
         // TODO
+
     }
 }

@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.tim.weather.Adapter.AdapterRecycle;
+import com.example.tim.weather.Data.JSON;
 import com.example.tim.weather.Data.POJO;
 import com.example.tim.weather.R;
 
@@ -78,15 +81,35 @@ public class MainActivity extends Activity {
         mAdapter = new AdapterRecycle(cityList, context);
         mRecyclerView.setAdapter(mAdapter);
 
+        Button button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new JSON().execute();
+            }
+        });
+
 
 //        AdapterRecycle.ViewHolder.setContext(context);
     }
-    public void callInfo(View view){
+
+    public void callInfo(View view) {
         System.out.println("test click");
-//                    Intent intent = new Intent(context.getApplicationContext(), Info.class);
+//        new JSON().execute();
         Intent intent = new Intent(context, Info.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+
+        JSON json = new JSON();
+        json.execute();
+        List<Object> jsonParsedObjects = json.getJsonParsedObjects();
+
+        TextView textView = (TextView) findViewById(R.id.jsonOut);
+
+        if (jsonParsedObjects != null) {
+            textView.setText(jsonParsedObjects.toString());
+        }
+
     }
 }
 
