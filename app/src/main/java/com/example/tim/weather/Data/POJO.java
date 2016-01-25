@@ -1,9 +1,10 @@
 package com.example.tim.weather.Data;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-public class POJO {
+public class POJO implements Serializable{
     private String cityName;
     private String id;
     private List<Weather> weatherList;

@@ -1,6 +1,10 @@
 package com.example.tim.weather.Data;
 
+import android.content.Intent;
 import android.os.AsyncTask;
+
+import com.example.tim.weather.Activity.Info;
+import com.example.tim.weather.Activity.MainActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,7 +19,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JSON extends AsyncTask<String, String, List<Object>> {
+public class JSON extends AsyncTask<String, String, ArrayList<Object>> {
     private static String TOKEN = "a5982092ec3e995cac27ef4bf254ffd2";
     private static String httpGroup = "http://api.openweathermap.org/data/2.5/group?id=";
     private static String http = "http://api.openweathermap.org/data/2.5/weather?q=";
@@ -32,11 +36,11 @@ public class JSON extends AsyncTask<String, String, List<Object>> {
         return jsonParsedObjects;
     }
 
-    public List<Object> jsonParsedObjects;
+    public ArrayList<Object> jsonParsedObjects;
 
 
     @Override
-    public List<Object> doInBackground(String... params) {
+    public ArrayList<Object> doInBackground(String... params) {
 
         try {
             URL url = new URL(http + "Kiev" + map + TOKEN);
@@ -125,11 +129,12 @@ public class JSON extends AsyncTask<String, String, List<Object>> {
     }
 
     @Override
-    protected void onPostExecute(List<Object> result) {
+    protected void onPostExecute(ArrayList<Object> result) {
         super.onPostExecute(result);
 //        jsonParsedObjects = result;
 //        AdapterRecycle adapter = new AdapterRecycle((List<POJO>) result);
         // TODO
+
 
     }
 }

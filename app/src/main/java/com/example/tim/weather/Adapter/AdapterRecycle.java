@@ -1,7 +1,6 @@
 package com.example.tim.weather.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.tim.weather.Activity.Info;
 import com.example.tim.weather.Data.POJO;
 import com.example.tim.weather.R;
 
@@ -18,7 +16,6 @@ import java.util.List;
 public class AdapterRecycle extends RecyclerView.Adapter<AdapterRecycle.ViewHolder> {
     private List<POJO> cities;
     private List<String> citiesID;
-    private static Context context;
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -29,26 +26,13 @@ public class AdapterRecycle extends RecyclerView.Adapter<AdapterRecycle.ViewHold
         public ViewHolder(View view) {
             super(view);
             this.view = view;
-            final Context context = AdapterRecycle.context;
             cardView = (CardView) view.findViewById(R.id.cv);
             cityName = (TextView) view.findViewById(R.id.cityName);
-            /*cardView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    System.out.println("test click");
-//                    Intent intent = new Intent(context.getApplicationContext(), Info.class);
-                    Intent intent = new Intent(context, Info.class);
-//                    startActivity(intent);
-                    context.getApplicationContext().startActivity(intent);
-                }
-            });*/
         }
     }
 
-    public AdapterRecycle(List<POJO> cities, Context context) {
+    public AdapterRecycle(List<POJO> cities) {
         this.cities = cities;
-        this.context = context;
     }
 
     @Override

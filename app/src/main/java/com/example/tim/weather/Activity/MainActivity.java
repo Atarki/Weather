@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends Activity {
     private RecyclerView mRecyclerView;
@@ -30,6 +31,7 @@ public class MainActivity extends Activity {
     private List<POJO> cityList;
     public Context context;
     private View view;
+    public List<Object> jsonParsedObjects;
 
     public void getCitiesID() throws IOException {
         citiesID = new ArrayList<>();
@@ -78,7 +80,7 @@ public class MainActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mAdapter = new AdapterRecycle(cityList, context);
+        mAdapter = new AdapterRecycle(cityList);
         mRecyclerView.setAdapter(mAdapter);
 
         Button button = (Button) findViewById(R.id.button);
@@ -88,28 +90,27 @@ public class MainActivity extends Activity {
                 new JSON().execute();
             }
         });
-
-
-//        AdapterRecycle.ViewHolder.setContext(context);
     }
 
-    public void callInfo(View view) {
+    public void callInfo(View view) throws ExecutionException, InterruptedException {
         System.out.println("test click");
-//        new JSON().execute();
-        Intent intent = new Intent(context, Info.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-
         JSON json = new JSON();
         json.execute();
-        List<Object> jsonParsedObjects = json.getJsonParsedObjects();
 
-        TextView textView = (TextView) findViewById(R.id.jsonOut);
+        ArrayList<Object> jsonParsedObjects = json.get();
 
-        if (jsonParsedObjects != null) {
-            textView.setText(jsonParsedObjects.toString());
+        Info info = new Info();
+        info.setJsonParsedObjects(jsonParsedObjects);
+
+        Intent intent = new Intent(context, Info.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtras("json", new POJO());
+        intent.putParcelableArrayListExtra("json", jsonParsedObjects);
+        context.startActivity(intent);
+
+        for (Object t : jsonParsedObjects) {
+            System.out.println(t.toString());
         }
-
     }
 }
 

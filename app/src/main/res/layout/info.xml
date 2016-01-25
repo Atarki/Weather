@@ -12,7 +12,7 @@
         android:id="@+id/cv"
         app:cardBackgroundColor="@color/cardview_light_background"
         app:cardUseCompatPadding="true"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:backgroundTintMode="screen"
 
