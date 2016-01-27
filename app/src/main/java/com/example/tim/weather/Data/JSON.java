@@ -1,7 +1,9 @@
 package com.example.tim.weather.Data;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 
 import com.example.tim.weather.Activity.Info;
 import com.example.tim.weather.Activity.MainActivity;
@@ -19,7 +21,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JSON extends AsyncTask<String, String, ArrayList<Object>> {
+public class JSON extends AsyncTask<String, String, POJO> {
     private static String TOKEN = "a5982092ec3e995cac27ef4bf254ffd2";
     private static String httpGroup = "http://api.openweathermap.org/data/2.5/group?id=";
     private static String http = "http://api.openweathermap.org/data/2.5/weather?q=";
@@ -31,6 +33,11 @@ public class JSON extends AsyncTask<String, String, ArrayList<Object>> {
     String citiesID = "710791,710735,710719,709930,709717,707471," +
             "706483,706448,706369,696050,705812,702658,702550,700569," +
             "698740,696643,695594,692194,691650,702569,690548,689558,687700,686967";
+    private Context context;
+
+    public JSON(Context context) {
+        this.context = context.getApplicationContext();
+    }
 
     public List<Object> getJsonParsedObjects() {
         return jsonParsedObjects;
@@ -40,7 +47,7 @@ public class JSON extends AsyncTask<String, String, ArrayList<Object>> {
 
 
     @Override
-    public ArrayList<Object> doInBackground(String... params) {
+    public POJO doInBackground(String... params) {
 
         try {
             URL url = new URL(http + "Kiev" + map + TOKEN);
@@ -111,16 +118,14 @@ public class JSON extends AsyncTask<String, String, ArrayList<Object>> {
             System.out.println(wind.getDeg());
             System.out.println(wind.getSpeed());
 
-            jsonParsedObjects = new ArrayList<>();
-            jsonParsedObjects.add(pojo);
-            jsonParsedObjects.add(weather_01);
-            jsonParsedObjects.add(main);
-            jsonParsedObjects.add(wind);
+            pojo.setWeather(weather_01);
+            pojo.setMain(main);
+            pojo.setWind(wind);
 
             if (connection == null) connection.disconnect();
             if (reader == null) reader.close();
 
-            return jsonParsedObjects;
+            return pojo;
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();
@@ -129,12 +134,23 @@ public class JSON extends AsyncTask<String, String, ArrayList<Object>> {
     }
 
     @Override
-    protected void onPostExecute(ArrayList<Object> result) {
+    protected void onPostExecute(POJO result) {
         super.onPostExecute(result);
 //        jsonParsedObjects = result;
 //        AdapterRecycle adapter = new AdapterRecycle((List<POJO>) result);
         // TODO
+//        Info info = new Info();
+//        info.setPojo(result);
 
 
+        Intent intent = new Intent(context, Info.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("pojo" , result);
+        intent.putExtras(bundle);
+
+        context.startActivity(intent);
+
+//        context.startActivity(new Intent(context, Info.class));
     }
 }

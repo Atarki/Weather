@@ -32,6 +32,7 @@ public class MainActivity extends Activity {
     public Context context;
     private View view;
     public List<Object> jsonParsedObjects;
+    private POJO pojo;
 
     public void getCitiesID() throws IOException {
         citiesID = new ArrayList<>();
@@ -87,30 +88,25 @@ public class MainActivity extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new JSON().execute();
+                new JSON(MainActivity.this).execute();
             }
         });
     }
 
     public void callInfo(View view) throws ExecutionException, InterruptedException {
         System.out.println("test click");
-        JSON json = new JSON();
+        JSON json = new JSON(MainActivity.this);
         json.execute();
 
-        ArrayList<Object> jsonParsedObjects = json.get();
+        /*pojo = json.get();
 
         Info info = new Info();
-        info.setJsonParsedObjects(jsonParsedObjects);
+        info.setPojo(pojo);
 
         Intent intent = new Intent(context, Info.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtras("json", new POJO());
-        intent.putParcelableArrayListExtra("json", jsonParsedObjects);
-        context.startActivity(intent);
 
-        for (Object t : jsonParsedObjects) {
-            System.out.println(t.toString());
-        }
+        context.startActivity(intent);*/
     }
 }
 

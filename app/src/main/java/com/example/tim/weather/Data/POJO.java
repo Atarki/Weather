@@ -1,17 +1,41 @@
 package com.example.tim.weather.Data;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
 
-public class POJO implements Serializable{
+public class POJO implements Serializable {
     private String cityName;
     private String id;
     private List<Weather> weatherList;
     private String name;
-    private Weather[] weather;
+    private Weather weather;
     private Main main;
     private Wind wind;
+
+    public Weather getWeather() {
+        return weather;
+    }
+
+    public void setWeather(Weather weather) {
+        this.weather = weather;
+    }
+
+    public Main getMain() {
+        return main;
+    }
+
+
+    public void setMain(Main main) {
+        this.main = main;
+    }
+
+    public Wind getWind() {
+        return wind;
+    }
+
+    public void setWind(Wind wind) {
+        this.wind = wind;
+    }
 
     public String getName() {
         return name;
@@ -29,15 +53,6 @@ public class POJO implements Serializable{
         this.weatherList = weatherList;
     }
 
-    public Weather[] getWeather() {
-        return weather;
-    }
-
-    public void setWeather(Weather[] weather) {
-        this.weather = weather;
-    }
-
-
     public String getCityName() {
         return cityName;
     }
@@ -54,18 +69,7 @@ public class POJO implements Serializable{
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "POJO{" +
-                "cityName='" + cityName + '\'' +
-                ", id=" + id +
-                ", weatherList=" + weatherList +
-                ", name='" + name + '\'' +
-                ", weather=" + Arrays.toString(weather) +
-                '}';
-    }
-
-    public static class Weather {
+    public static class Weather implements Serializable{
         private String main;
         private String icon;
         private String description;
@@ -98,7 +102,7 @@ public class POJO implements Serializable{
         }
     }
 
-    public static class Main {
+    public static class Main implements Serializable{
         private String temp;
         private String pressure;
         private String humidity;
@@ -146,7 +150,7 @@ public class POJO implements Serializable{
         }
     }
 
-    public static class Wind {
+    public static class Wind implements Serializable{
         private String speed;
         private String deg;
 
