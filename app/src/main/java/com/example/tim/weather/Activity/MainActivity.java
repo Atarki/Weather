@@ -1,6 +1,7 @@
 package com.example.tim.weather.Activity;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ public class MainActivity extends Activity {
     private View view;
     public List<Object> jsonParsedObjects;
     private POJO pojo;
+    private FragmentManager fragmentManager;
 
     public void getCitiesID() throws IOException {
         citiesID = new ArrayList<>();
@@ -66,6 +68,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         context = getApplicationContext();
+        fragmentManager = getFragmentManager();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -88,14 +91,15 @@ public class MainActivity extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new JSON(MainActivity.this).execute();
+                new JSON(MainActivity.this,fragmentManager).execute();
             }
         });
+
     }
 
     public void callInfo(View view) throws ExecutionException, InterruptedException {
         System.out.println("test click");
-        JSON json = new JSON(MainActivity.this);
+        JSON json = new JSON(MainActivity.this,fragmentManager);
         json.execute();
 
         /*pojo = json.get();

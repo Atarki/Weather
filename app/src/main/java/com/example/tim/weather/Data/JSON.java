@@ -1,5 +1,6 @@
 package com.example.tim.weather.Data;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 
 import com.example.tim.weather.Activity.Info;
 import com.example.tim.weather.Activity.MainActivity;
+import com.example.tim.weather.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,9 +36,11 @@ public class JSON extends AsyncTask<String, String, POJO> {
             "706483,706448,706369,696050,705812,702658,702550,700569," +
             "698740,696643,695594,692194,691650,702569,690548,689558,687700,686967";
     private Context context;
+    private FragmentManager fragmentManager;
 
-    public JSON(Context context) {
+    public JSON(Context context ,FragmentManager fragmentManager) {
         this.context = context.getApplicationContext();
+        this.fragmentManager = fragmentManager;
     }
 
     public List<Object> getJsonParsedObjects() {
@@ -142,15 +146,18 @@ public class JSON extends AsyncTask<String, String, POJO> {
 //        Info info = new Info();
 //        info.setPojo(result);
 
-
         Intent intent = new Intent(context, Info.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
         Bundle bundle = new Bundle();
-        bundle.putSerializable("pojo" , result);
+        bundle.putSerializable("pojo", result);
+
         intent.putExtras(bundle);
 
-        context.startActivity(intent);
+        Info info = new Info();
+        info.setArguments(bundle);
+        info.show(fragmentManager,"info");
 
-//        context.startActivity(new Intent(context, Info.class));
+//        context.startActivity(intent);
     }
 }
