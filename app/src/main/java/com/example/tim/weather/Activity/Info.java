@@ -1,11 +1,10 @@
 package com.example.tim.weather.Activity;
 
-import android.app.Activity;
 import android.app.DialogFragment;
-import android.app.Fragment;
-import android.content.Intent;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +13,10 @@ import android.widget.TextView;
 import com.example.tim.weather.Data.POJO;
 import com.example.tim.weather.R;
 
-import java.util.List;
-
-public class Info  extends DialogFragment {
+public class Info extends DialogFragment {
     private POJO pojo;
     private TextView textView;
     private View view;
-
 
 
     public POJO getPojo() {
@@ -31,15 +27,28 @@ public class Info  extends DialogFragment {
         this.pojo = pojo;
     }
 
-//    @Nullable
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        View infoView = inflater.inflate(R.layout.info, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle) {
+        View infoView = inflater.inflate(R.layout.info, viewGroup, false);
 
-//        Bundle pojo = bundle.getBundle("info");
-//        POJO.Main main = pojo.getMain();
-//        textView = (TextView) textView.findViewById(R.id.name);
-//        textView.setText(pojo.getName());
+        pojo = (POJO) getArguments().getSerializable("pojo");
+
+
+        assert pojo != null;
+        POJO.Main main = pojo.getMain();
+        System.out.println("MAIN " + main.getTemp());
+
+        CardView cardView = (CardView) viewGroup.findViewById(R.id.cv);
+
+        textView = (TextView) viewGroup.findViewById(R.id.name);
+        textView.setText(pojo.getName());
+
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.commit();
+
         return infoView;
     }
 

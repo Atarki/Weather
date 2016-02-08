@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JSON extends AsyncTask<String, String, POJO> {
-    private static String TOKEN = "a5982092ec3e995cac27ef4bf254ffd2";
+    private static String TOKEN = "9a871c8ef2483ae73d0da581612cd016";
     private static String httpGroup = "http://api.openweathermap.org/data/2.5/group?id=";
     private static String http = "http://api.openweathermap.org/data/2.5/weather?q=";
     private static String map = "&appid=";
@@ -55,10 +55,12 @@ public class JSON extends AsyncTask<String, String, POJO> {
 
         try {
             URL url = new URL(http + "Kiev" + map + TOKEN);
+
+            System.out.println(url.toString());// Delete later
+
             connection = (HttpURLConnection) url.openConnection();
             connection.connect();
 
-            System.out.println(url.toString());// Delete later
 
             inputStream = connection.getInputStream();
             reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -143,16 +145,14 @@ public class JSON extends AsyncTask<String, String, POJO> {
 //        jsonParsedObjects = result;
 //        AdapterRecycle adapter = new AdapterRecycle((List<POJO>) result);
         // TODO
-//        Info info = new Info();
-//        info.setPojo(result);
 
         Intent intent = new Intent(context, Info.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.putExtras(bundle);
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("pojo", result);
 
-        intent.putExtras(bundle);
 
         Info info = new Info();
         info.setArguments(bundle);
