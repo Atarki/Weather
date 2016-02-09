@@ -99,18 +99,7 @@ public class MainActivity extends Activity {
 
     public void callInfo(View view) throws ExecutionException, InterruptedException {
         System.out.println("test click");
-        JSON json = new JSON(MainActivity.this,fragmentManager);
-        json.execute();
-
-        /*pojo = json.get();
-
-        Info info = new Info();
-        info.setPojo(pojo);
-
-        Intent intent = new Intent(context, Info.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        context.startActivity(intent);*/
+        new JSON(MainActivity.this,fragmentManager).execute();
     }
 }
 
